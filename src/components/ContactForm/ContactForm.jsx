@@ -1,11 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, selectContacts } from "../../redux/contactsSlice";
-import { nanoid } from "nanoid";
 import { useId } from "react";
 import css from "./ContactForm.module.css";
 import { toast } from "react-hot-toast";
+import { addContact } from "../../redux/operations";
+import { selectContacts } from "../../redux/selectors";
 
 const initialValues = {
   name: "",
@@ -19,7 +19,7 @@ const FeedbackSchema = Yup.object({
     .matches(/^[A-Za-z\s-]+$/, "Name must be a valid!")
     .required("Name is required"),
   number: Yup.string()
-    .matches(/^\d{3}-\d{2}-\d{2}$/, "Number must be in the format XXX-XX-XX")
+    .matches(/^\d{3}-\d{3}-\d{4}$/, "Number must be in the format XXX-XXX-XXXX")
     .required("Number is required"),
 });
 
@@ -33,7 +33,7 @@ const ContactForm = () => {
     const isDuplicate = contacts.some(
       (contact) =>
         contact.name.toLowerCase() === values.name.toLowerCase() ||
-        contact.number === values.number
+        contact.phone === values.number
     );
 
     if (isDuplicate) {
@@ -43,9 +43,8 @@ const ContactForm = () => {
 
     dispatch(
       addContact({
-        id: nanoid(),
         name: values.name,
-        number: values.number,
+        phone: values.number,
       })
     );
 

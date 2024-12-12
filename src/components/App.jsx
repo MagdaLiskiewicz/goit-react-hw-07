@@ -6,8 +6,21 @@ import { Toaster } from "react-hot-toast";
 
 import css from "./App.module.css";
 import "modern-normalize/modern-normalize.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchContacts } from "../redux/operations";
+import { selectError, selectIsLoading } from "../redux/selectors.js";
+import Loader from "./Loader/Loader.jsx";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <div className={css.container}>
       <h1 className={css.title}>
@@ -17,6 +30,8 @@ const App = () => {
       <Toaster position="top-right" reverseOrder={false} />
       <ContactForm />
       <SearchBox />
+      {isLoading && !error && <Loader />}
+
       <ContactList />
     </div>
   );
