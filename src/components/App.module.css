@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
+}
+
+.title {
+  display: flex;
+  gap: 10px;
+  font-size: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleIcon {
+  color: #052a4b;
+}
+
+@media screen and (min-width: 375px) {
+  .container {
+    width: 375px;
+  }
+  .title {
+    font-size: 48px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    width: 1024px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    width: 1440px;
+  }
+}
